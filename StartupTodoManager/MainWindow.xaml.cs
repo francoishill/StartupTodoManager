@@ -42,10 +42,16 @@ namespace StartupTodoManager
 
 			//tabControl1.ItemsSource = files;
 
-			foreach (string file in Directory.GetFiles(dir, "*.txt"))
+			foreach (string file in Directory.GetFiles(dir, "*.txt").OrderBy(f => new FileInfo(f).CreationTime))
 				if (file.EndsWith(".txt", StringComparison.InvariantCultureIgnoreCase))
-					tabControl1.Items.Add(new TodoFile(file));
+					AddNewTodoItem(file);
 			//tabControl1.Items.Add(new TabItem() { Header = Path.GetFileNameWithoutExtension(file), Content = File.ReadAllText(file), Tag = file });
+		}
+
+		private void AddNewTodoItem(string fileName)
+		{
+			TodoFile tf = new TodoFile(fileName);
+			tabControl1.Items.Add(tf);
 		}
 
 		private void MenuitemOpenInExplorer_Click(object sender, RoutedEventArgs e)
@@ -64,7 +70,7 @@ namespace StartupTodoManager
 			{
 				string newfilename = dir + "\\" + newname + ".txt";
 				File.Create(newfilename).Close();
-				tabControl1.Items.Add(new TodoFile(newfilename));
+				AddNewTodoItem(newfilename);
 			}
 		}
 
@@ -84,6 +90,7 @@ namespace StartupTodoManager
 	public class TodoFile : INotifyPropertyChanged
 	{
 		private const string dataformatFileExtension = "yyyyMMddHHmmssfff";
+		private bool IgnoreTodolineUpdate = false;
 
 		public string FileName { get { return Path.GetFileNameWithoutExtension(FullFilePath); } }
 		public string FileContent
@@ -100,14 +107,58 @@ namespace StartupTodoManager
 				File.WriteAllText(backupFilePath, File.ReadAllText(FullFilePath));
 				File.SetAttributes(backupFilePath, FileAttributes.System | FileAttributes.Hidden);
 				File.WriteAllText(FullFilePath, value);
+				if (!IgnoreTodolineUpdate)
+					UpdateTodoLines();
 				OnPropertyChanged("FileContent");
 			}
 		}
+		public ObservableCollection<TodoLine> TodoLines { get; set; }
 		public string FullFilePath;
 
-		//public ObservableCollection<string> Items {get{return FileContent.Split('\n', '\r')
+		public TodoFile(string FullFilePath)
+		{
+			this.FullFilePath = FullFilePath;
+			UpdateTodoLines();
+		}
 
-		public TodoFile(string FullFilePath) { this.FullFilePath = FullFilePath; }
+		private void UpdateTodoLines()
+		{
+			this.TodoLines = new ObservableCollection<TodoLine>(FileContent.Split(new string[] { "\r\n" }, StringSplitOptions.None).Select(l => new TodoLine(l.TrimStart('/'), l.Trim().StartsWith("//"))));
+			SetTodolineCompleteEvents();
+			OnPropertyChanged("TodoLines");
+		}
+
+		private void SetTodolineCompleteEvents()
+		{
+			UnsetTodolineCompleteEvents();
+			foreach (TodoLine tl in this.TodoLines)
+				tl.PropertyChanged += new PropertyChangedEventHandler(TodoLine_PropertyChanged);
+		}
+
+		private void UnsetTodolineCompleteEvents()
+		{
+			foreach (TodoLine tl in this.TodoLines)
+				tl.PropertyChanged -= new PropertyChangedEventHandler(TodoLine_PropertyChanged);
+		}
+
+		private void TodoLine_PropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			if (e.PropertyName.Equals("IsComplete") || e.PropertyName.Equals("LineText")) RefreshFileContentFromTodoLines();
+		}
+
+		private void RefreshFileContentFromTodoLines()
+		{
+			string tmpContents = "";
+			foreach (TodoLine tl in this.TodoLines)
+				tmpContents += (tmpContents.Length > 0 ? Environment.NewLine : "") + (tl.IsComplete ? "//" : "") + tl.LineText;
+			try
+			{
+				IgnoreTodolineUpdate = true;
+				this.FileContent = tmpContents;
+			}
+			finally { IgnoreTodolineUpdate = false; }
+			tmpContents = null;
+		}
 
 		public string GetDateFilenameNow()
 		{
@@ -119,7 +170,25 @@ namespace StartupTodoManager
 			File.Move(FullFilePath, GetDateFilenameNow());
 		}
 
-		public event PropertyChangedEventHandler  PropertyChanged = new PropertyChangedEventHandler(delegate { });
+		public event PropertyChangedEventHandler PropertyChanged = new PropertyChangedEventHandler(delegate { });
+		public void OnPropertyChanged(string propertyName) { PropertyChanged(this, new PropertyChangedEventArgs(propertyName)); }
+	}
+
+	public class TodoLine : INotifyPropertyChanged
+	{
+		private string _linetext;
+		public string LineText { get { return _linetext; } set { _linetext = value; OnPropertyChanged("LineText"); } }
+
+		private bool _iscomplete;
+		public bool IsComplete { get { return _iscomplete; } set { _iscomplete = value; OnPropertyChanged("IsComplete"); } }
+
+		public TodoLine(string LineText, bool IsComplete)
+		{
+			this.LineText = LineText;
+			this.IsComplete = IsComplete;
+		}
+
+		public event PropertyChangedEventHandler PropertyChanged = new PropertyChangedEventHandler(delegate { });
 		public void OnPropertyChanged(string propertyName) { PropertyChanged(this, new PropertyChangedEventArgs(propertyName)); }
 	}
 }

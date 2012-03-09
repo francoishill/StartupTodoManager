@@ -1,25 +1,45 @@
 ﻿<Window x:Class="StartupTodoManager.MainWindow"
 		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:sharedclasses='clr-namespace:SharedClasses'
 		Title="MainWindow"
 		Height="800"
 		Width="1200"
 		Loaded='Window_Loaded'
 		WindowStartupLocation='CenterScreen'>
-	<!--xmlns:wpftoolkitextended='clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit.Extended'-->
 	<Window.ContextMenu>
 		<ContextMenu>
-			<MenuItem Header='Add todo file' Click='MenuitemAddTodoFile_Click' />
+			<MenuItem Header='Add todo file'
+					  Click='MenuitemAddTodoFile_Click' />
 		</ContextMenu>
 	</Window.ContextMenu>
 	<Window.Resources>
+		<sharedclasses:BooleanToVisibilityConverter x:Key='booleanToVisibilityConverter' />
+		<sharedclasses:BooleanToTextWrappingConverter x:Key='booleanToTextWrappingConverter' />
 		<DataTemplate x:Key="templateForTheContent"
 					  DataType="{x:Type TextBox}">
-			<DockPanel LastChildFill='True'>
+			<DockPanel LastChildFill='True'
+					   Tag='{Binding FileName}'>
 				<DockPanel DockPanel.Dock='Bottom'>
 					<CheckBox DockPanel.Dock='Left'
+							  x:Name='checkBoxIsReadOnly'
 							  Content='Readonly'
-							  IsChecked='{Binding IsReadOnly, ElementName=contentTextbox}' />
+							  FontSize='10'
+							  VerticalAlignment='Center'
+							  IsChecked='True' />
+					<CheckBox DockPanel.Dock='Left'
+							  x:Name='checkBoxIsTextWrapped'
+							  Margin='10,0,0,0'
+							  Content='Wrap text'
+							  FontSize='10'
+							  VerticalAlignment='Center'
+							  IsChecked='True' />
+					<CheckBox DockPanel.Dock='Left'
+							  x:Name='checkBoxListViewActive'
+							  Margin='10,0,0,0'
+							  Content='List view'
+							  FontSize='10'
+							  VerticalAlignment='Center' />
 					<Slider DockPanel.Dock='Right'
 							Minimum='6'
 							Maximum='40'
@@ -29,18 +49,33 @@
 				</DockPanel>
 				<TextBox x:Name='contentTextbox'
 						 DockPanel.Dock='Top'
-						 IsReadOnly='True'
-						 FontSize='20'
-						 TextWrapping='WrapWithOverflow'
+						 IsReadOnly='{Binding IsChecked, ElementName=checkBoxIsReadOnly}'
+						 FontSize='24'
+						 Visibility='{Binding IsChecked, ElementName=checkBoxListViewActive, Converter={StaticResource booleanToVisibilityConverter}, ConverterParameter=opposite}'
+						 TextWrapping='{Binding IsChecked, ElementName=checkBoxIsTextWrapped, Converter={StaticResource booleanToTextWrappingConverter}}'
 						 HorizontalScrollBarVisibility='Auto'
 						 VerticalScrollBarVisibility='Auto'
 						 IsReadOnlyCaretVisible='True'
 						 Text='{Binding FileContent, UpdateSourceTrigger=PropertyChanged}'
 						 AcceptsReturn='True'
 						 AcceptsTab='True' />
-
-				<!--<wpftoolkitextended:CheckListBox ItemsSource='{Binding Items}'
-												 DisplayMemberPath="Name"/>-->
+				<ListBox ItemsSource='{Binding TodoLines}'
+						 Visibility='{Binding IsChecked, ElementName=checkBoxListViewActive, Converter={StaticResource booleanToVisibilityConverter}}'>
+					<ListBox.ItemTemplate>
+						<DataTemplate>
+							<StackPanel Orientation='Horizontal'
+										Margin='20,10,0,0'>
+								<CheckBox IsChecked='{Binding IsComplete}'
+										  VerticalAlignment='Center' />
+								<TextBox IsReadOnly='{Binding IsChecked, ElementName=checkBoxIsReadOnly}'
+										 IsReadOnlyCaretVisible='True'
+										 Margin='10,0,0,0'
+										 MinWidth='100'
+										 Text='{Binding LineText, UpdateSourceTrigger=PropertyChanged}' />
+							</StackPanel>
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+				</ListBox>
 			</DockPanel>
 		</DataTemplate>
 
@@ -50,7 +85,8 @@
 					   FontSize='20'>
 				<TextBlock.ContextMenu>
 					<ContextMenu>
-						<MenuItem Header='Open in explorer' Click='MenuitemOpenInExplorer_Click' />
+						<MenuItem Header='Open in explorer'
+								  Click='MenuitemOpenInExplorer_Click' />
 						<MenuItem Header='Delete todo file'
 								  Click='MenuitemDeleteTodoFile_Click' />
 					</ContextMenu>
@@ -62,10 +98,5 @@
 				Name='tabControl1'
 				ItemTemplate='{StaticResource templateForTheHeader}'
 				ContentTemplate='{StaticResource templateForTheContent}'>
-			<!--<TabControl.ContentTemplate>
-			<DataTemplate>
-				<TextBox Text='{Binding}'/>
-			</DataTemplate>
-		</TabControl.ContentTemplate>-->
 	</TabControl>
 </Window>

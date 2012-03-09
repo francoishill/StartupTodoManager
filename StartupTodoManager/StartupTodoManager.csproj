@@ -69,6 +69,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="..\..\SharedClasses\ConvertersGeneral.cs">
+      <Link>ConvertersGeneral.cs</Link>
+    </Compile>
     <Compile Include="..\..\SharedClasses\InputBoxWPF.xaml.cs">
       <Link>InputBoxWPF.xaml.cs</Link>
       <DependentUpon>InputBoxWPF.xaml</DependentUpon>
