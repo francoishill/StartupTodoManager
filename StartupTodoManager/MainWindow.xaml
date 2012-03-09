@@ -35,7 +35,9 @@
 						 HorizontalScrollBarVisibility='Auto'
 						 VerticalScrollBarVisibility='Auto'
 						 IsReadOnlyCaretVisible='True'
-						 Text='{Binding FileContent, UpdateSourceTrigger=PropertyChanged}' />
+						 Text='{Binding FileContent, UpdateSourceTrigger=PropertyChanged}'
+						 AcceptsReturn='True'
+						 AcceptsTab='True' />
 
 				<!--<wpftoolkitextended:CheckListBox ItemsSource='{Binding Items}'
 												 DisplayMemberPath="Name"/>-->
