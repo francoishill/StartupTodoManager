@@ -40,9 +40,14 @@
   <PropertyGroup>
     <ApplicationIcon>app.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -54,6 +59,9 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WPFToolkit.Extended">
+      <HintPath>..\..\..\..\..\..\..\Francois\other\DLLs\WPF Toolkit (Extended)\WPFToolkit.Extended.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -75,6 +83,9 @@
     <Compile Include="..\..\SharedClasses\InputBoxWPF.xaml.cs">
       <Link>InputBoxWPF.xaml.cs</Link>
       <DependentUpon>InputBoxWPF.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="..\..\SharedClasses\NotifyIconWPF.cs">
+      <Link>NotifyIconWPF.cs</Link>
     </Compile>
     <Compile Include="..\..\SharedClasses\WPFdraggableCanvas.cs">
       <Link>WPFdraggableCanvas.cs</Link>
@@ -106,6 +117,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
