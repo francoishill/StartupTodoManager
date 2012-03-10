@@ -18,6 +18,7 @@ using System.Globalization;
 using System.Windows.Threading;
 using System.IO.Compression;
 using System.Windows.Interop;
+using SharedClasses;
 
 namespace StartupTodoManager
 {
@@ -46,6 +47,8 @@ namespace StartupTodoManager
 		private int timerElapsedCount = 0;
 		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
+			WindowMessagesInterop.InitializeClientMessages();
+
 			if (!Directory.Exists(dir))
 				return;
 
@@ -126,19 +129,33 @@ namespace StartupTodoManager
 
 		private IntPtr WindowProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
-			switch (msg)
+			WindowMessagesInterop.MessageTypes mt;
+			WindowMessagesInterop.ClientHandleMessage(msg, wParam, lParam, out mt);
+			if (mt == WindowMessagesInterop.MessageTypes.Show)
+				this.ShowNow();
+			else if (mt == WindowMessagesInterop.MessageTypes.Close)
 			{
-				case 0x11:
-				case 0x16:
-					//Close reason: WindowsShutDown
-					this.MustForceClose = true;
-					this.Close();
-					break;
-				case 0x112:
-					if (((ushort)wParam & 0xfff0) == 0xf060)
-					//Close reason: User/EndTask
-					{ }
-					break;
+				this.MustForceClose = true;
+				this.Close();
+			}
+			else if (mt == WindowMessagesInterop.MessageTypes.Hide)
+				this.Hide();
+			else
+			{
+				switch (msg)
+				{
+					case 0x11:
+					case 0x16:
+						//Close reason: WindowsShutDown
+						this.MustForceClose = true;
+						this.Close();
+						break;
+					case 0x112:
+						if (((ushort)wParam & 0xfff0) == 0xf060)
+						//Close reason: User/EndTask
+						{ }
+						break;
+				}
 			}
 			return IntPtr.Zero;
 		}
