@@ -231,7 +231,10 @@ namespace StartupTodoManager
 
 		private void OnNotifyIconLeftButtonDown(object sender, MouseButtonEventArgs e)
 		{
-			ShowNow();
+			if (this.Visibility == System.Windows.Visibility.Visible)
+				this.Hide();
+			else
+				ShowNow();
 		}
 
 		private void OnMenuItemShowClick(object sender, EventArgs e)
