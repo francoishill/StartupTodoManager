@@ -47,7 +47,8 @@ namespace StartupTodoManager
 		private int timerElapsedCount = 0;
 		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
-			WindowMessagesInterop.InitializeClientMessages();
+			//WindowMessagesInterop.InitializeClientMessages();
+			StartPipeClient();
 
 			if (!Directory.Exists(dir))
 				return;
@@ -122,6 +123,27 @@ namespace StartupTodoManager
 			source.AddHook(WindowProc);
 		}
 
+		private void StartPipeClient()
+		{
+			NamedPipesInterop.NamedPipeClient pipeclient = NamedPipesInterop.NamedPipeClient.StartNewPipeClient(
+				ActionOnError: (e) => { Console.WriteLine("Error occured: " + e.GetException().Message); },
+				ActionOnMessageReceived: (m) =>
+				{
+					if (m.MessageType == PipeMessageTypes.AcknowledgeClientRegistration)
+						Console.WriteLine("Client successfully registered.");
+					else
+					{
+						if (m.MessageType == PipeMessageTypes.Show)
+							Dispatcher.BeginInvoke((Action)delegate { this.ShowNow(); });
+						else if (m.MessageType == PipeMessageTypes.Hide)
+							Dispatcher.BeginInvoke((Action)delegate { this.Hide(); });
+						else if (m.MessageType == PipeMessageTypes.Close)
+							Dispatcher.BeginInvoke((Action)delegate { MustForceClose = true; this.Close(); });
+					}
+				});
+			this.Closing += delegate { if (pipeclient != null) { pipeclient.ForceCancelRetryLoop = true; } };
+		}
+
 		private void BeginInvokeSeparateThread(Action action)
 		{
 			Dispatcher.BeginInvoke(action);
@@ -129,18 +151,18 @@ namespace StartupTodoManager
 
 		private IntPtr WindowProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
-			WindowMessagesInterop.MessageTypes mt;
-			WindowMessagesInterop.ClientHandleMessage(msg, wParam, lParam, out mt);
-			if (mt == WindowMessagesInterop.MessageTypes.Show)
-				this.ShowNow();
-			else if (mt == WindowMessagesInterop.MessageTypes.Close)
-			{
-				this.MustForceClose = true;
-				this.Close();
-			}
-			else if (mt == WindowMessagesInterop.MessageTypes.Hide)
-				this.Hide();
-			else
+			//WindowMessagesInterop.MessageTypes mt;
+			//WindowMessagesInterop.ClientHandleMessage(msg, wParam, lParam, out mt);
+			//if (mt == WindowMessagesInterop.MessageTypes.Show)
+			//    this.ShowNow();
+			//else if (mt == WindowMessagesInterop.MessageTypes.Close)
+			//{
+			//    this.MustForceClose = true;
+			//    this.Close();
+			//}
+			//else if (mt == WindowMessagesInterop.MessageTypes.Hide)
+			//    this.Hide();
+			//else
 			{
 				switch (msg)
 				{
