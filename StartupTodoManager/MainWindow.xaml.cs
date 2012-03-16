@@ -29,7 +29,7 @@ namespace StartupTodoManager
 	{
 		private static TimeSpan TickInterval = TimeSpan.FromSeconds(5);
 		private static TimeSpan MinDurationToSaveAfterLastModified = TimeSpan.FromSeconds(5);
-		private const int cElapsedDueDateCountBeforeMessagebox = 10;
+		private const int cElapsedDueDateCountBeforeMessagebox = 20;
 
 		private string OriginalTitle;
 
@@ -408,7 +408,7 @@ namespace StartupTodoManager
 
 	public class TodoLine : INotifyPropertyChanged
 	{
-		public static TimeSpan DurationBetweenIsDueChecks = TimeSpan.FromSeconds(30);
+		public static TimeSpan DurationBetweenIsDueChecks = TimeSpan.FromMinutes(5);
 		private static DateTime NoDueDateValue = DateTime.MinValue;
 
 		private string _linetext;
