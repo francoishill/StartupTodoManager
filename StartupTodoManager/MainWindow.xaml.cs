@@ -118,9 +118,13 @@ namespace StartupTodoManager
 				TodoLine.DurationBetweenIsDueChecks);
 
 			//tabControl1.Items.Add(new TabItem() { Header = Path.GetFileNameWithoutExtension(file), Content = File.ReadAllText(file), Tag = file });
+		}
 
+		protected override void OnSourceInitialized(EventArgs e)
+		{
 			HwndSource source = (HwndSource)PresentationSource.FromDependencyObject(this);
 			source.AddHook(WindowProc);
+			base.OnSourceInitialized(e);
 		}
 
 		/*private void StartPipeClient()
@@ -152,15 +156,22 @@ namespace StartupTodoManager
 		private IntPtr WindowProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
 			WindowMessagesInterop.MessageTypes mt;
-			WindowMessagesInterop.ClientHandleMessage(msg, wParam, lParam, out mt);
-			if (mt == WindowMessagesInterop.MessageTypes.Show)
-				this.ShowNow();
-			else if (mt == WindowMessagesInterop.MessageTypes.Hide)
-				this.Hide();
-			else if (mt == WindowMessagesInterop.MessageTypes.Close)
+			string messageText;
+			if (WindowMessagesInterop.ClientHandleMessage(msg, wParam, lParam, out mt))
 			{
-				this.MustForceClose = true;
-				this.Close();
+				if (mt == WindowMessagesInterop.MessageTypes.Show)
+					this.ShowNow();
+				else if (mt == WindowMessagesInterop.MessageTypes.Hide)
+					this.Hide();
+				else if (mt == WindowMessagesInterop.MessageTypes.Close)
+				{
+					this.MustForceClose = true;
+					this.Close();
+				}
+			}
+			else if (WindowMessagesInterop.ClientHandleStringMessage(msg, wParam, lParam, out messageText))
+			{
+				UserMessages.ShowErrorMessage("Message received: " + messageText);
 			}
 			else
 			{

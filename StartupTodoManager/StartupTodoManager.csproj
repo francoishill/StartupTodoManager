@@ -90,6 +90,9 @@
     <Compile Include="..\..\SharedClasses\NotifyIconWPF.cs">
       <Link>NotifyIconWPF.cs</Link>
     </Compile>
+    <Compile Include="..\..\SharedClasses\UserMessages.cs">
+      <Link>UserMessages.cs</Link>
+    </Compile>
     <Compile Include="..\..\SharedClasses\WindowMessagesInterop.cs">
       <Link>WindowMessagesInterop.cs</Link>
     </Compile>
