@@ -29,7 +29,7 @@ namespace StartupTodoManager
 	{
 		private static TimeSpan TickInterval = TimeSpan.FromSeconds(5);
 		private static TimeSpan MinDurationToSaveAfterLastModified = TimeSpan.FromSeconds(5);
-		private const int cElapsedDueDateCountBeforeMessagebox = 20;
+		//private const int cElapsedDueDateCountBeforeMessagebox = 1;//20;
 
 		private string OriginalTitle;
 
@@ -83,18 +83,37 @@ namespace StartupTodoManager
 
 					int DueItemCount = 0;
 					foreach (TodoFile tf in tabControl1.Items)
-						foreach (TodoLine tl in tf.TodoLines)
+						//foreach (TodoLine tl in tf.TodoLines)
+						for (int i = 0; i < tf.TodoLines.Count; i++)
 						{
+							TodoLine tl = tf.TodoLines[i];
 							if (tl.IsDue)
-							{
-								BeginInvokeSeparateThread(() => { this.ShowNow(); });
 								DueItemCount++;
-								if (timerElapsedCount >= cElapsedDueDateCountBeforeMessagebox)
-									MessageBox.Show("Todo item is overdue, due time was " + tl.DueDate.ToString("ddd yyyy-MM-dd HH:mm"));
+
+							if (tl.IsReminderDue)//.IsDue)
+							{
+								//BeginInvokeSeparateThread(() =>
+								Application.Current.Dispatcher.Invoke((Action)delegate
+								{
+									//this.ShowNow();
+									if (!SnoozeReminder.ShowReminderSnooze(ref tl))//Was not handled, or user requested to show main form
+									{
+										tabControl1.SelectedItem = tf;
+										this.ShowNow();
+									}
+								});
+								//if (timerElapsedCount >= cElapsedDueDateCountBeforeMessagebox)
+								//{
+								//BeginInvokeSeparateThread((Action)delegate
+								//{
+
+								//});
+								//MessageBox.Show("Todo item is overdue, due time was " + tl.DueDate.ToString("ddd yyyy-MM-dd HH:mm"));
+								//}
 							}
 						}
-					if (timerElapsedCount >= cElapsedDueDateCountBeforeMessagebox)
-						timerElapsedCount = 0;
+					//if (timerElapsedCount >= cElapsedDueDateCountBeforeMessagebox)
+					//    timerElapsedCount = 0;
 					BeginInvokeSeparateThread(
 						(Action)delegate
 						{
@@ -118,6 +137,8 @@ namespace StartupTodoManager
 				TodoLine.DurationBetweenIsDueChecks);
 
 			//tabControl1.Items.Add(new TabItem() { Header = Path.GetFileNameWithoutExtension(file), Content = File.ReadAllText(file), Tag = file });
+
+			this.Hide();
 		}
 
 		protected override void OnSourceInitialized(EventArgs e)
@@ -231,13 +252,17 @@ namespace StartupTodoManager
 			tf = null;
 		}
 
+		private bool IsBusyClosing = false;
 		private void Window_Closing(object sender, CancelEventArgs e)
 		{
 			if (MustForceClose)
 			{
+				IsBusyClosing = true;
 				foreach (TodoFile tf in tabControl1.Items)
 					if (tf.HasUnsavedChanges)
 						tf.SaveChanges();
+
+				SnoozeReminder.CloseAllCurrentlyShowingItems();
 			}
 			else
 			{
@@ -253,6 +278,8 @@ namespace StartupTodoManager
 
 		private void ShowNow()
 		{
+			if (IsBusyClosing)
+				return;
 			this.Show();
 			this.WindowState = windowStateBeforeMinimized;
 			bool tmptopmost = this.Topmost;
@@ -419,7 +446,7 @@ namespace StartupTodoManager
 
 	public class TodoLine : INotifyPropertyChanged
 	{
-		public static TimeSpan DurationBetweenIsDueChecks = TimeSpan.FromMinutes(5);
+		public static TimeSpan DurationBetweenIsDueChecks = TimeSpan.FromSeconds(1);//TimeSpan.FromMinutes(5);
 		private static DateTime NoDueDateValue = DateTime.MinValue;
 
 		private string _linetext;
@@ -429,9 +456,12 @@ namespace StartupTodoManager
 		public bool IsComplete { get { return _iscomplete; } set { _iscomplete = value; OnPropertyChanged("IsComplete", "DueDate", "HasDueDate", "IsDue"); } }
 
 		private DateTime _duedate;
-		public DateTime DueDate { get { return _duedate; } set { if (_duedate.Equals(value)) return; _duedate = value; OnPropertyChanged("DueDate", "HasDueDate", "IsDue"); } }
+		public DateTime DueDate { get { return _duedate; } set { if (_duedate.Equals(value)) return; _duedate = value; _reminderdate = value; OnPropertyChanged("DueDate", "HasDueDate", "IsDue", "ReminderDate"); } }
 
 		public bool HasDueDate { get { return !DueDate.Equals(DateTime.MinValue); } }
+
+		private DateTime _reminderdate;
+		public DateTime ReminderDate { get { return _reminderdate; } set { _reminderdate = value; OnPropertyChanged("ReminderDate"); } }
 
 		public TodoLine(string LineText)//, bool IsComplete)
 		{
@@ -456,6 +486,7 @@ namespace StartupTodoManager
 		}
 
 		public bool IsDue { get { OnPropertyChanged("IdDue"); if (!HasDueDate || IsComplete) return false; return DateTime.Now.Subtract(DueDate).Add(DurationBetweenIsDueChecks).TotalSeconds >= 0; } }
+		public bool IsReminderDue { get { OnPropertyChanged("IsReminderDue"); if (!HasDueDate || IsComplete) return false; return DateTime.Now.Subtract(ReminderDate).Add(DurationBetweenIsDueChecks).TotalSeconds >= 0; } }
 
 		private const string cSaveDateFormat = "[yyyy-MM-dd HH:mm]";
 		public string GetFullLineText()

@@ -93,6 +93,15 @@
 																	   Margin='10,0,0,0'
 																	   Format='Custom'
 																	   FormatString='yyyy-MM-dd \a\t HH:mm' />
+									<wpftoolkitextended:DateTimePicker Value='{Binding ReminderDate}'
+																	   IsEnabled='False'
+																	   Opacity='{Binding HasDueDate, Converter={StaticResource booleanToOpacityConverter}, ConverterParameter=0.1}'
+																	   Watermark='yyyy-MM-dd at HH:mm'
+																	   FontSize='10'
+																	   Foreground='Gray'
+																	   Margin='10,0,0,0'
+																	   Format='Custom'
+																	   FormatString='yyyy-MM-dd \a\t HH:mm' />
 								</StackPanel>
 							</DataTemplate>
 						</ListBox.ItemTemplate>
