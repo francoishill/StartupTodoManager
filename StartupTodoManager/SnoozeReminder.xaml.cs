@@ -114,5 +114,13 @@ namespace StartupTodoManager
 		}
 
 		public static void CloseAllCurrentlyShowingItems() { foreach (TodoLine tl in currentlyShowingItems.Keys) currentlyShowingItems[tl].Close(); }
+
+		private void comboBoxTimeUnit_MouseEnter(object sender, MouseEventArgs e)
+		{
+			ComboBox cb = sender as ComboBox;
+			if (cb == null)
+				return;
+			cb.Focus();
+		}
 	}
 }

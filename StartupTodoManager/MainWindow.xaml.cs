@@ -93,15 +93,18 @@ namespace StartupTodoManager
 							if (tl.IsReminderDue)//.IsDue)
 							{
 								//BeginInvokeSeparateThread(() =>
-								Application.Current.Dispatcher.Invoke((Action)delegate
+								if (Application.Current != null)
 								{
-									//this.ShowNow();
-									if (!SnoozeReminder.ShowReminderSnooze(ref tl))//Was not handled, or user requested to show main form
+									Application.Current.Dispatcher.Invoke((Action)delegate
 									{
-										tabControl1.SelectedItem = tf;
-										this.ShowNow();
-									}
-								});
+										//this.ShowNow();
+										if (!SnoozeReminder.ShowReminderSnooze(ref tl))//Was not handled, or user requested to show main form
+										{
+											tabControl1.SelectedItem = tf;
+											this.ShowNow();
+										}
+									});
+								}
 								//if (timerElapsedCount >= cElapsedDueDateCountBeforeMessagebox)
 								//{
 								//BeginInvokeSeparateThread((Action)delegate

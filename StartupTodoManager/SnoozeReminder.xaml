@@ -1,25 +1,80 @@
-﻿<Window xmlns:my1="clr-namespace:Microsoft.Windows.Controls.Primitives;assembly=WPFToolkit"  x:Class="StartupTodoManager.SnoozeReminder"
+﻿<Window xmlns:my1="clr-namespace:Microsoft.Windows.Controls.Primitives;assembly=WPFToolkit"
+		x:Class="StartupTodoManager.SnoozeReminder"
 		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		Title="Reminder (Startup Todo Manager)"
 		Height="200"
-		Width="400"
+		Width="420"
 		Name='SnoozeReminderWindow'
 		xmlns:my="clr-namespace:eisiWare;assembly=NumericUpDown"
 		WindowStartupLocation='Manual'
 		WindowStyle='None'
 		Loaded='SnoozeReminderWindow_Loaded'
-		SizeToContent='Height'>
-	<Window.Background>
-		<LinearGradientBrush StartPoint='0,0' EndPoint='0,1'>
-			<GradientStop Color='#eee'
+		SizeToContent='Height'
+		Background='{DynamicResource windowBackground}'>
+	<Window.Resources>
+		<LinearGradientBrush x:Key='windowBackground'
+							 StartPoint='0,0'
+							 EndPoint='0,1'>
+			<GradientStop Color='#ddd'
 						  Offset='0' />
 			<GradientStop Color='#fff'
-						  Offset='0.25' />
-			<GradientStop Color='#eee'
+						  Offset='0.35' />
+			<GradientStop Color='#ccc'
 						  Offset='1' />
 		</LinearGradientBrush>
-	</Window.Background>
+		<LinearGradientBrush x:Key='buttonBackground'
+							 StartPoint='0,0'
+							 EndPoint='0,1'>
+			<GradientStop Color='#050'
+						  Offset='0' />
+			<GradientStop Color='#080'
+						  Offset='0.35' />
+			<GradientStop Color='#030'
+						  Offset='1' />
+		</LinearGradientBrush>
+		<ControlTemplate x:Key='buttonTemplate'
+						 TargetType="Button">
+			<Border x:Name="Border"
+					CornerRadius="5"
+					BorderThickness="2"
+					BorderBrush="#aa000000"
+					Padding='5,2'
+					Background='{StaticResource buttonBackground}'>
+				<Border.Effect>
+					<DropShadowEffect BlurRadius='10' />
+				</Border.Effect>
+				<ContentPresenter Margin="2"
+								  HorizontalAlignment="Center"
+								  VerticalAlignment="Center"
+								  RecognizesAccessKey="True"
+								  TextBlock.Foreground='#eee' />
+			</Border>
+			<ControlTemplate.Triggers>
+				<Trigger Property="IsKeyboardFocused"
+						 Value="true">
+					<Setter TargetName="Border"
+							Property="BorderBrush"
+							Value="#630" />
+				</Trigger>
+				<Trigger Property="IsMouseOver"
+						 Value="true">
+					<Setter TargetName="Border"
+							Property="Background"
+							Value="#040" />
+				</Trigger>
+				<Trigger Property="IsPressed"
+						 Value="true">
+					<Setter TargetName="Border"
+							Property="Background"
+							Value="#020" />
+					<Setter TargetName="Border"
+							Property="BorderBrush"
+							Value="Black" />
+				</Trigger>
+			</ControlTemplate.Triggers>
+		</ControlTemplate>
+	</Window.Resources>
 	<Grid Margin='10'>
 		<Grid.RowDefinitions>
 			<RowDefinition Height='auto' />
@@ -42,23 +97,33 @@
 					   TextWrapping='Wrap'
 					   MaxHeight='40'
 					   TextTrimming='WordEllipsis'
+					   Foreground='#F3D90000'
+					   FontWeight='Bold'
 					   Text='{Binding LineText}' />
 		</DockPanel>
 		<DockPanel Grid.Row='3'
 				   LastChildFill='False'>
 			<Button Content='Mark _complete'
 					DockPanel.Dock='Left'
+					Template='{StaticResource buttonTemplate}'
+					Padding='7,3'
 					Click='ButtonMarkComplete_Click' />
 			<Button Content='Show in _list'
 					Margin='10,0,0,0'
+					Template='{StaticResource buttonTemplate}'
 					Click='ButtonShowInList_Click' />
 			<StackPanel DockPanel.Dock='Right'
 						Orientation='Horizontal'>
-				<ComboBox Name='comboBoxNumberOf' />
+				<ComboBox Name='comboBoxNumberOf'
+						  Background='Transparent'
+						  MouseEnter='comboBoxTimeUnit_MouseEnter' />
 				<ComboBox Name='comboBoxTimeUnit'
-						  Margin='10,0,0,0' />
+						  Background='Transparent'
+						  Margin='10,0,0,0'
+						  MouseEnter='comboBoxTimeUnit_MouseEnter' />
 				<Button Content='_Snooze'
 						Margin='10,0,0,0'
+						Template='{StaticResource buttonTemplate}'
 						Click='ButtonSnoozeClick' />
 			</StackPanel>
 		</DockPanel>
