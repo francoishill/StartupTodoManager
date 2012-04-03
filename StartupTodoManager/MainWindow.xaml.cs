@@ -319,6 +319,11 @@ namespace StartupTodoManager
 			else
 				windowStateBeforeMinimized = this.WindowState;
 		}
+
+		private void OnMenuItemAboutClick(object sender, EventArgs e)
+		{
+			AboutWindow.ShowAboutWindow();
+		}
 	}
 
 	public class TodoFile : INotifyPropertyChanged

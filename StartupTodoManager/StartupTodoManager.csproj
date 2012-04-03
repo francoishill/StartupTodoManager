@@ -79,9 +79,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="..\..\SharedClasses\AboutWindow.xaml.cs">
+      <Link>AboutWindow.xaml.cs</Link>
+      <DependentUpon>AboutWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SnoozeReminder.xaml.cs">
       <DependentUpon>SnoozeReminder.xaml</DependentUpon>
     </Compile>
+    <Page Include="..\..\SharedClasses\AboutWindow.xaml">
+      <Link>AboutWindow.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="..\..\SharedClasses\InputBoxWPF.xaml">
       <Link>InputBoxWPF.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
