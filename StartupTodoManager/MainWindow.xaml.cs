@@ -47,6 +47,8 @@ namespace StartupTodoManager
 		private int timerElapsedCount = 0;
 		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
+			new OnlineTodoWindow().Show();
+
 			WindowMessagesInterop.InitializeClientMessages();
 			//StartPipeClient();
 

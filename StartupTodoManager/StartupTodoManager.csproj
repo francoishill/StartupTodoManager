@@ -83,6 +83,23 @@
       <Link>AboutWindow.xaml.cs</Link>
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="..\..\SharedClasses\EventHandlers.cs">
+      <Link>EventHandlers.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SharedClasses\OnlineTodoWindow.xaml.cs">
+      <Link>OnlineTodoWindow.xaml.cs</Link>
+      <DependentUpon>OnlineTodoWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="..\..\SharedClasses\PhpInterop.cs">
+      <Link>PhpInterop.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SharedClasses\TextblockDoubleclickTextbox.xaml.cs">
+      <Link>TextblockDoubleclickTextbox.xaml.cs</Link>
+      <DependentUpon>TextblockDoubleclickTextbox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="..\..\SharedClasses\ThreadingInterop.cs">
+      <Link>ThreadingInterop.cs</Link>
+    </Compile>
     <Compile Include="SnoozeReminder.xaml.cs">
       <DependentUpon>SnoozeReminder.xaml</DependentUpon>
     </Compile>
@@ -93,6 +110,16 @@
     </Page>
     <Page Include="..\..\SharedClasses\InputBoxWPF.xaml">
       <Link>InputBoxWPF.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="..\..\SharedClasses\OnlineTodoWindow.xaml">
+      <Link>OnlineTodoWindow.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="..\..\SharedClasses\TextblockDoubleclickTextbox.xaml">
+      <Link>TextblockDoubleclickTextbox.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

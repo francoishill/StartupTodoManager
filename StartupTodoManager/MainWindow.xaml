@@ -13,6 +13,10 @@
 		Closing='Window_Closing'
 		StateChanged='Window_StateChanged'>
 	<Window.Resources>
+		<SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"
+						 Color="Transparent" />
+		<SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}"
+						 Color="Black" />
 		<sharedclasses:BooleanToVisibilityConverter x:Key='booleanToVisibilityConverter' />
 		<sharedclasses:BooleanToOpacityConverter x:Key='booleanToOpacityConverter' />
 		<sharedclasses:BooleanToTextWrappingConverter x:Key='booleanToTextWrappingConverter' />
