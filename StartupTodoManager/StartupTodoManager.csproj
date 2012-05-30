@@ -100,6 +100,13 @@
     <Compile Include="..\..\SharedClasses\ThreadingInterop.cs">
       <Link>ThreadingInterop.cs</Link>
     </Compile>
+    <Compile Include="..\..\SharedClasses\UserMessageBox.cs">
+      <Link>UserMessageBox.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SharedClasses\UserMessageBox.designer.cs">
+      <Link>UserMessageBox.designer.cs</Link>
+      <DependentUpon>UserMessageBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="SnoozeReminder.xaml.cs">
       <DependentUpon>SnoozeReminder.xaml</DependentUpon>
     </Compile>
@@ -173,6 +180,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="..\..\SharedClasses\UserMessageBox.resx">
+      <Link>UserMessageBox.resx</Link>
+      <DependentUpon>UserMessageBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
