@@ -4,7 +4,7 @@
 		xmlns:local='clr-namespace:StartupTodoManager'
 		xmlns:sharedclasses='clr-namespace:SharedClasses'
 		xmlns:forms="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
-		xmlns:wpftoolkitextended='clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit.Extended'
+		xmlns:wpftoolkitextended='clr-namespace:Xceed.Wpf.Toolkit;assembly=WPFToolkit.Extended'
 		Title="Startup Todo's"
 		Height="700"
 		Width="1200"

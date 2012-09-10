@@ -324,7 +324,7 @@ namespace StartupTodoManager
 
 		private void OnMenuItemAboutClick(object sender, EventArgs e)
 		{
-			AboutWindow.ShowAboutWindow();
+			AboutWindow.ShowAboutWindow(err => UserMessages.ShowErrorMessage(err));
 		}
 	}
 
