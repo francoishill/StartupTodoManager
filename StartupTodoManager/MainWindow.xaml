@@ -142,7 +142,7 @@
 	</Window.TaskbarItemInfo>
 	<Grid>
 		<sharedclasses:NotificationAreaIcon x:Name='trayIcon'
-											Text="Monitoring Subversion"
+											Text="Startup Todo Manager"
 											Icon="app.ico"
 											MouseLeftButtonDown='OnNotifyIconLeftButtonDown'>
 			<sharedclasses:NotificationAreaIcon.MenuItems>
