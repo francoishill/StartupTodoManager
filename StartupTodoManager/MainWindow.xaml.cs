@@ -290,7 +290,7 @@ namespace StartupTodoManager
 			this.Topmost = true;
 			this.BringIntoView();
 			this.Topmost = tmptopmost;
-			this.Activate();
+			//this.Activate(); DO NOT activate for now
 		}
 
 		private void OnNotifyIconLeftButtonDown(object sender, MouseButtonEventArgs e)
