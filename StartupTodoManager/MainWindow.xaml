@@ -159,8 +159,16 @@
 		</sharedclasses:NotificationAreaIcon>
 	<TabControl TabStripPlacement='Left'
 				Name='tabControl1'
+				Margin='0 0 0 20'
 				ItemTemplate='{StaticResource templateForTheHeader}'
 				ContentTemplate='{StaticResource templateForTheContent}'>
 	</TabControl>
+		<Label Content='_About'
+			   FontSize='10'
+			   Foreground='Gray'
+			   VerticalAlignment='Bottom'
+			   HorizontalAlignment='Right'
+			   Cursor='Hand'
+			   MouseLeftButtonDown='labelAbout_MouseLeftButtonDown' />
 	</Grid>
 </Window>

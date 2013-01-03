@@ -83,8 +83,21 @@
       <Link>AboutWindow.xaml.cs</Link>
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="..\..\SharedClasses\AboutWindow2.xaml.cs">
+      <Link>AboutWindow2.xaml.cs</Link>
+      <DependentUpon>AboutWindow2.xaml</DependentUpon>
+    </Compile>
     <Compile Include="..\..\SharedClasses\ActionsInterop.cs">
       <Link>ActionsInterop.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SharedClasses\AppTypeIndependant.cs">
+      <Link>AppTypeIndependant.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SharedClasses\AutoUpdating.cs">
+      <Link>AutoUpdating.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SharedClasses\DeveloperCommunication.cs">
+      <Link>DeveloperCommunication.cs</Link>
     </Compile>
     <Compile Include="..\..\SharedClasses\EncodeAndDecodeInterop.cs">
       <Link>EncodeAndDecodeInterop.cs</Link>
@@ -94,6 +107,12 @@
     </Compile>
     <Compile Include="..\..\SharedClasses\EventHandlers.cs">
       <Link>EventHandlers.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SharedClasses\fastJSON.cs">
+      <Link>fastJSON.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SharedClasses\FeedbackMessageTypes.cs">
+      <Link>FeedbackMessageTypes.cs</Link>
     </Compile>
     <Compile Include="..\..\SharedClasses\MiniDownloadBarForm.cs">
       <Link>MiniDownloadBarForm.cs</Link>
@@ -110,6 +129,15 @@
     <Compile Include="..\..\SharedClasses\PhpInterop.cs">
       <Link>PhpInterop.cs</Link>
     </Compile>
+    <Compile Include="..\..\SharedClasses\ProcessesInterop.cs">
+      <Link>ProcessesInterop.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SharedClasses\ReflectionInterop.cs">
+      <Link>ReflectionInterop.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SharedClasses\RegistryInterop.cs">
+      <Link>RegistryInterop.cs</Link>
+    </Compile>
     <Compile Include="..\..\SharedClasses\TextblockDoubleclickTextbox.xaml.cs">
       <Link>TextblockDoubleclickTextbox.xaml.cs</Link>
       <DependentUpon>TextblockDoubleclickTextbox.xaml</DependentUpon>
@@ -119,6 +147,10 @@
     </Compile>
     <Compile Include="..\..\SharedClasses\TodoFileInterop.cs">
       <Link>TodoFileInterop.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SharedClasses\UnhandledExceptionsWindow.xaml.cs">
+      <Link>UnhandledExceptionsWindow.xaml.cs</Link>
+      <DependentUpon>UnhandledExceptionsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="..\..\SharedClasses\UserMessages.cs">
       <Link>UserMessages.cs</Link>
@@ -136,6 +168,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="..\..\SharedClasses\AboutWindow2.xaml">
+      <Link>AboutWindow2.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="..\..\SharedClasses\InputBoxWPF.xaml">
       <Link>InputBoxWPF.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
@@ -150,6 +186,10 @@
       <Link>TextblockDoubleclickTextbox.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="..\..\SharedClasses\UnhandledExceptionsWindow.xaml">
+      <Link>UnhandledExceptionsWindow.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
