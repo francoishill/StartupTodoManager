@@ -142,7 +142,7 @@ namespace StartupTodoManager
 			this.UpdateLayout();
 			this.Hide();
 
-			new OnlineTodoWindow().Show();
+			//new OnlineTodoWindow().Show();
 		}
 
 		protected override void OnSourceInitialized(EventArgs e)
@@ -323,10 +323,15 @@ namespace StartupTodoManager
 
 		private void OnMenuItemAboutClick(object sender, EventArgs e)
 		{
-			AboutWindow.ShowAboutWindow(err => UserMessages.ShowErrorMessage(err));
+			ShowAboutWindow();
 		}
 
 		private void labelAbout_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+		{
+			ShowAboutWindow();
+		}
+
+		private static void ShowAboutWindow()
 		{
 			AboutWindow2.ShowAboutWindow(new System.Collections.ObjectModel.ObservableCollection<DisplayItem>()
 			{
