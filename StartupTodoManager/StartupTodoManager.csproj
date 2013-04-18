@@ -24,7 +24,8 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <BaseIntermediateOutputPath>..\..\..\..\Binaries\StartupTodoManager\obj\Debug\x86</BaseIntermediateOutputPath>
+    <OutputPath>..\..\..\..\Binaries\StartupTodoManager\bin\Debug\x86</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -34,7 +35,8 @@
     <PlatformTarget>x86</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <BaseIntermediateOutputPath>..\..\..\..\Binaries\StartupTodoManager\obj\Release\x86</BaseIntermediateOutputPath>
+    <OutputPath>..\..\..\..\Binaries\StartupTodoManager\bin\Release\x86</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -51,7 +53,7 @@
       <HintPath>..\..\..\DLLs\Windows API\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
     </Reference>
     <Reference Include="NumericUpDown">
-      <HintPath>..\..\..\..\..\..\..\Francois\Other\DLLs\WPF numeric updown\NumericUpDown.dll</HintPath>
+      <HintPath>..\..\..\..\..\Users\francois\Dropbox\Dev\DLLs\WPF numeric updown\NumericUpDown.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -71,10 +73,10 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="WPFToolkit">
-      <HintPath>..\..\..\..\..\..\..\Francois\Other\DLLs\WPF Toolkit\WPFToolkit.dll</HintPath>
+      <HintPath>..\..\..\..\..\Users\francois\Dropbox\Dev\DLLs\WPF Toolkit\WPFToolkit.dll</HintPath>
     </Reference>
     <Reference Include="WPFToolkit.Extended">
-      <HintPath>..\..\..\..\..\..\..\Francois\other\DLLs\WPF Toolkit (Extended)\WPFToolkit.Extended.dll</HintPath>
+      <HintPath>..\..\..\..\..\Users\francois\Dropbox\Dev\DLLs\WPF Toolkit (Extended)\WPFToolkit.Extended.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
