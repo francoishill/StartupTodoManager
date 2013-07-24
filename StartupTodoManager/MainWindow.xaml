@@ -7,8 +7,8 @@
 		xmlns:wpftoolkitextended='clr-namespace:Xceed.Wpf.Toolkit;assembly=WPFToolkit.Extended'
 		Title="Startup Todo's"
 		Icon='app.ico'
-		Height="700"
-		Width="1200"
+        Height="464.195"
+        Width="1200"
 		Loaded='Window_Loaded'
 		WindowStartupLocation='CenterScreen'
 		Closing='Window_Closing'
@@ -49,7 +49,7 @@
 							  FontSize='10'
 							  VerticalAlignment='Center' />
 					<CheckBox DockPanel.Dock='Right'
-							  IsChecked='{Binding HasUnsavedChanges}'
+							  IsChecked='{Binding HasUnsavedChanges, Mode=OneWay}'
 							  IsEnabled='False'
 							  Content='HasUnsavedChanges' />
 					<Slider x:Name='sliderFontSize'
