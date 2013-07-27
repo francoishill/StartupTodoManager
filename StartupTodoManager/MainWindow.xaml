@@ -4,7 +4,7 @@
 		xmlns:local='clr-namespace:StartupTodoManager'
 		xmlns:sharedclasses='clr-namespace:SharedClasses;assembly=_OwnAppsSharedDll'
 		xmlns:forms="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
-		xmlns:wpftoolkitextended='clr-namespace:Xceed.Wpf.Toolkit;assembly=WPFToolkit.Extended'
+		xmlns:wpftoolkitextended='clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit'
 		Title="Startup Todo's"
 		Icon='app.ico'
         Height="464.195"

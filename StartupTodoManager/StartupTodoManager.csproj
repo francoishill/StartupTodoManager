@@ -53,7 +53,7 @@
       <HintPath>..\..\..\DLLs\Windows API\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
     </Reference>
     <Reference Include="NumericUpDown">
-      <HintPath>..\..\..\..\..\Users\francois\Dropbox\Dev\DLLs\WPF numeric updown\NumericUpDown.dll</HintPath>
+      <HintPath>..\..\..\DLLs\WPF numeric updown\NumericUpDown.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -72,11 +72,8 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="WPFToolkit">
-      <HintPath>..\..\..\..\..\Users\francois\Dropbox\Dev\DLLs\WPF Toolkit\WPFToolkit.dll</HintPath>
-    </Reference>
-    <Reference Include="WPFToolkit.Extended">
-      <HintPath>..\..\..\..\..\Users\francois\Dropbox\Dev\DLLs\WPF Toolkit (Extended)\WPFToolkit.Extended.dll</HintPath>
+    <Reference Include="Xceed.Wpf.Toolkit">
+      <HintPath>..\..\..\DLLs\WPF Toolkit (Extended)\NewestXceed\Xceed.Wpf.Toolkit.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
